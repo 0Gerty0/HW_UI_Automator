@@ -22,15 +22,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build
+      - name: Build (assemble + unit tests)
         run: ./gradlew build --stacktrace
 
   test:
     needs: build
     runs-on: macos-13
-    defaults:
-      run:
-        working-directory: sample
     steps:
       - uses: actions/checkout@v4
 
@@ -44,7 +41,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Instrumented UI tests
+      - name: Instrumented UI tests (UI Automator)
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
